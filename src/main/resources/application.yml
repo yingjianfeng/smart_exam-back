@@ -1,0 +1,24 @@
+server:
+  port: 80
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ecjtu.exam.pojo
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/smart_exam?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+  http:
+    encoding:
+      charset: UTF-8
+
+
+
