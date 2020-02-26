@@ -2,11 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ecjtu.exam.dao.IStudnetDao">
+<mapper namespace="com.ecjtu.exam.dao.IGradeDao">
 
-    <select id="qryAll" resultType="Student">
+    <select id="qryAll" resultType="Grade">
 		select *
-		from student
+		from grade
 	</select>
+
 
 </mapper>

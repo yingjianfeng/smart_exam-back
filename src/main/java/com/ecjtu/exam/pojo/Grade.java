@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
-public class Student {
+public class Grade implements Serializable {
     int id;
-    String account;
-    String password;
+    String name;
 }
