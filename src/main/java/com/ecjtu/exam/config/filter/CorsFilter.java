@@ -1,4 +1,4 @@
-package com.ecjtu.exam.config;
+package com.ecjtu.exam.config.filter;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;

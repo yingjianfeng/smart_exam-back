@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface IPeopleService {
     public List<People> qryAll();
+
     public People login(People people) throws Exception;
+
+    public void register(People people) throws Exception;
 }

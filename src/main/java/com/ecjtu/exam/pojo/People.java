@@ -18,5 +18,5 @@ public class People implements Serializable {
     int grade_id;
     int school_id;
     int status;
-    int type;
+    int role_id;
 }

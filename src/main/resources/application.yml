@@ -31,3 +31,7 @@ spring:
         max-idle: 5
         min-idle: 0
     timeout: 10000
+jwt:
+  config:
+    key: yjfyjf
+    ttl: 3600000

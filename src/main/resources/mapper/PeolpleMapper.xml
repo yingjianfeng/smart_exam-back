@@ -13,5 +13,40 @@
 		from people
 		where account =#{account} and type=#{type}
 	</select>
+    <select id="qryByAccount" resultType="People" parameterType="String">
+		select *
+		from people
+		where account =#{account}
+	</select>
+    <insert id="insert" parameterType="People">
+		insert into people
+		(name,account,password,type,grade_id,school_id)
+		values(#{name},#{account},#{password},#{type},#{grade_id},#{school_id});
+	</insert>
+    <resultMap id="role_map" type="Role">
+        <id property="id" column="r_id"/>
+        <result property="name" column="r_name"/>
+        <result property="description" column="r_description"/>
+        <collection property="resources" ofType="Resource">
+            <id property="id" column="rr_id"/>
+            <result property="url" column="rr_url"/>
+            <result property="description" column="rr_description"/>
+        </collection>
+    </resultMap>
+    <select id="qryRoleOfPeople" parameterType="int" resultMap="role_map">
+		select role.id r_id, role.name r_name,role.description r_description,
+				resource.id rr_id, resource.url rr_url,resource.description rr_description
+from   (role  left join role_resource on role.id=role_resource.role_id) left join resource on role_resource.resource_id=resource.id
+where role.id=#{id}
+	</select>
+
+    <select id="getResourceByUrl" parameterType="String" resultType="Resource">
+        select * from resource where url=#{url}
+    </select>
+    <select id="getRolesByResourceId" parameterType="Role" resultType="Role">
+        select role.id id , role.name name, role.description description
+from (resource left join role_resource on resource.id=role_resource.resource_id) left join role on role_resource.role_id=role.id
+where resource.id=#{resourceId}
+    </select>
 
 </mapper>
