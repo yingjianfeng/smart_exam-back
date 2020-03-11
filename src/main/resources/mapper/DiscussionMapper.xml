@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ecjtu.exam.dao.IDiscussionDao">
+
+    <select id="insert" parameterType="discussion">
+		insert into discussion (people_id,content,imgs,create_time,state)
+		values(#{people_id},#{content},#{imgs},#{create_time},#{state})
+	</select>
+
+    <select id="qryNotParentId" resultType="discussion">
+SELECT
+	discussion.id id,
+	discussion.people_id people_id,
+	discussion.content content,
+	discussion.imgs imgs,
+	discussion.create_time create_time,
+	discussion.state state,
+	discussion.`like` `like`,
+	discussion.`comment` comment,
+	discussion.`share` share,
+	discussion.parent_id parent_id,
+	people.`name` people_name
+FROM
+	discussion
+	LEFT JOIN people ON discussion.people_id= people.id
+WHERE
+	discussion.parent_id IS NULL
+	OR discussion.parent_id =0
+	</select>
+
+
+</mapper>

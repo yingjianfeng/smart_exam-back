@@ -9,8 +9,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class Resource implements Serializable {
+public class PeopleLike implements Serializable {
     int id;
-    String url;
-    String description;
+    int people_id;
+    int discussion_id;
 }

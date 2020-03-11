@@ -20,8 +20,8 @@ public class PeopleDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         // TODO 根据用户名，查找到对应的密码，与权限
         // 封装用户信息，并返回。参数分别是：用户名，密码，用户权限
-        System.out.println("account:  "+s);
-        System.out.println("PeopleDetailsService");
+//        System.out.println("account:  "+s);
+//        System.out.println("PeopleDetailsService");
         People people = iPeopleDao.qryByAccount(s);
         if(people == null)
         {

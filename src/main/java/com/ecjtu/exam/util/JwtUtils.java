@@ -56,6 +56,7 @@ public class JwtUtils {
      * 解析token字符串获取clamis
      */
     public Claims parseJwt(String token) {
+        token = token.replace("Bearer ", "");
         Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
         return claims;
     }

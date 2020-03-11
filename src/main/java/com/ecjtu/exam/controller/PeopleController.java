@@ -30,9 +30,9 @@ public class PeopleController {
         return iStudnetService.qryAll();
     }
 
-    @PostMapping(value = "/login")
-//    @PostMapping(value = "/x", produces = "application/json;charset=UTF-8")  @RequestBody
-    public ResultUtil login(People people) {
+//    @PostMapping(value = "/login")
+    @PostMapping("/login")
+    public ResultUtil login(@RequestBody People people) {
         System.out.println(people);
         Map<String, Object> map = new HashMap();
         try {
@@ -66,7 +66,7 @@ public class PeopleController {
         return map;
     }
 
-    @PostMapping(value = "/register", produces = "application/json;charset=UTF-8")
+    @PostMapping("/register")
     public Map register(@RequestBody People people) {
 //        System.out.println(people);
         people.setName(CommonUtil.getRandomStr());  //赋予一个随机名称
