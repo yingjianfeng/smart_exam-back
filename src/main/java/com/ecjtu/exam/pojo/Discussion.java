@@ -24,4 +24,7 @@ public class Discussion implements Serializable {
     int comment;
     int share;
     int parent_id;
+
+    boolean liked;
+
 }

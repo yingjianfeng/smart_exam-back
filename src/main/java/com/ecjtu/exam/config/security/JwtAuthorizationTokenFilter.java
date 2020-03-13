@@ -66,13 +66,13 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
             System.out.println(password+"  "+ userDetails.getPassword());
             if (password.equals(userDetails.getPassword())) {
-                System.out.println("password.equals(userDetails.getPassword())");
+//                System.out.println("password.equals(userDetails.getPassword())");
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
         }
-        System.out.println("JwtAuthorizationTokenFilter out");
+//        System.out.println("JwtAuthorizationTokenFilter out");
         chain.doFilter(request, response);
     }
 }

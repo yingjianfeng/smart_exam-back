@@ -2,6 +2,7 @@ package com.ecjtu.exam.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ecjtu.exam.pojo.Discussion;
+import com.ecjtu.exam.pojo.PeopleLike;
 import com.ecjtu.exam.service.IDiscussionService;
 import com.ecjtu.exam.util.QiniuUtil;
 import com.ecjtu.exam.util.ResultCodeUtil;
@@ -66,16 +67,44 @@ public class DiscussionController extends BaseController {
     @PostMapping("/qryNotParentId")
     public ResultUtil qryNotParentId() {
         List<Discussion> discussions = null;
+        PeopleLike peopleLike = null;
         try {
-            discussions = iDiscussionService.qryNotParentId();
-            for(Discussion discussion:discussions){
-                discussion.setImgs(qiniuUtil.getUrl(discussion.getImgs()));
-            }
+            discussions = iDiscussionService.qryNotParentId(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResultUtil(ResultCodeUtil.SUCCESS, discussions);
     }
 
+    @GetMapping("/deleteLikeByDiscussion")
+    public ResultUtil deleteLikeByDiscussion(int discussion_id) {
+        try {
+            iDiscussionService.deleteByPeopleIdAndDiscussionId(id, discussion_id);
+        } catch (Exception e) {
+            return new ResultUtil(ResultCodeUtil.FAIL);
+        }
+        return new ResultUtil(ResultCodeUtil.SUCCESS);
+    }
+
+    @GetMapping("/addLikeByDiscussion")
+    public ResultUtil addLikeByDiscussion(int discussion_id) {
+        try {
+            iDiscussionService.addByPeopleIdAndDiscussionId(id, discussion_id);
+        } catch (Exception e) {
+            return new ResultUtil(ResultCodeUtil.FAIL);
+        }
+        return new ResultUtil(ResultCodeUtil.SUCCESS);
+    }
+
+    @GetMapping("/qryByParentId")
+    public ResultUtil qryByParentId(int parent_id) {
+        List<Discussion> comment = null;
+        try {
+            comment = iDiscussionService.qryByParentId(parent_id,id);
+        } catch (Exception e) {
+            return new ResultUtil(ResultCodeUtil.FAIL);
+        }
+        return new ResultUtil(ResultCodeUtil.SUCCESS, comment);
+    }
 
 }

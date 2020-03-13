@@ -24,7 +24,10 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         //得到用户的请求地址,控制台输出一下
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
-//        System.out.println("用户请求的地址是：" + requestUrl);
+        if(requestUrl.indexOf("?")!=-1){
+            requestUrl = requestUrl.substring(0,requestUrl.indexOf("?"));
+        }
+        System.out.println("用户请求的地址是：" + requestUrl);
 //        System.out.println("FilterInvocationSecurityMetadataSourceImpl");
 
         //如果登录页面就不需要权限
@@ -44,10 +47,10 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
         for (int i = 0; i < size; i++) {
             Role role = roles.get(i);
             values[i] = role.getName();
-            System.out.println("values[i]  "+values[i]);
+//            System.out.println("values[i]  "+values[i]);
         }
 
-        System.out.println(SecurityConfig.createList(values));
+//        System.out.println(SecurityConfig.createList(values));
         return SecurityConfig.createList(values);
     }
 

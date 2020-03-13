@@ -17,9 +17,6 @@ SELECT
 	discussion.imgs imgs,
 	discussion.create_time create_time,
 	discussion.state state,
-	discussion.`like` `like`,
-	discussion.`comment` comment,
-	discussion.`share` share,
 	discussion.parent_id parent_id,
 	people.`name` people_name
 FROM
@@ -30,5 +27,38 @@ WHERE
 	OR discussion.parent_id =0
 	</select>
 
+    <select id="qryByPeopleIdAndDiscussionId" parameterType="map" resultType="PeopleLike">
+		select * from people_like
+		where people_id=#{peopleId} and discussion_id=#{discussionId}
+	</select>
+
+    <select id="qryAllByDiscussionId" parameterType="int" resultType="PeopleLike">
+		select * from people_like where discussion_id=#{id}
+	</select>
+
+    <delete id="deleteByPeopleIdAndDiscussionId" parameterType="map">
+		delete from people_like
+		where people_id=#{peopleId} and discussion_id=#{discussionId}
+	</delete>
+    <insert id="addByPeopleIdAndDiscussionId" parameterType="map">
+		insert into people_like (people_id,discussion_id)values (#{peopleId},#{discussionId})
+	</insert>
+
+    <select id="qryByParentId" parameterType="int" resultType="discussion">
+SELECT
+	discussion.id id,
+	discussion.people_id people_id,
+	discussion.content content,
+	discussion.imgs imgs,
+	discussion.create_time create_time,
+	discussion.state state,
+	discussion.parent_id parent_id,
+	people.`name` people_name
+FROM
+	discussion
+	LEFT JOIN people ON discussion.people_id= people.id
+WHERE
+	discussion.parent_id =#{id}
+	</select>
 
 </mapper>
