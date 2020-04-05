@@ -19,4 +19,6 @@ public interface IPeopleDao {
 
     public Resource getResourceByUrl(String url);
     public List<Role> getRolesByResourceId(int resourceId);
+
+    public People qryById(int id) ;
 }

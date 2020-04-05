@@ -51,4 +51,9 @@ public class PeopleServiceImpl implements IPeopleService {
             throw new Exception(e.getMessage());
         }
     }
+
+    @Override
+    public People qryById(int id) throws Exception {
+        return ipeopleDao.qryById(id);
+    }
 }

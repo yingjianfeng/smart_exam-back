@@ -1,5 +1,6 @@
 package com.ecjtu.exam;
 
+import com.ecjtu.exam.dao.IQuestionDao;
 import com.ecjtu.exam.util.QiniuUtil;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
@@ -44,6 +45,13 @@ class ExamApplicationTests {
             e.printStackTrace();
         }
 
+    }
+
+    @Autowired
+    IQuestionDao iQuestionDao;
+    @Test
+    public void test(){
+        System.out.println(iQuestionDao.qryGradeAndClassify());
     }
 
 }

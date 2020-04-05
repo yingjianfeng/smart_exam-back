@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ecjtu.exam.dao.IQuestionDao">
+    <resultMap type="Grade" id="GradeWithClassifyResult">
+        <id property="id" column="gid"/>
+        <result property="name" column="gname"/>
+        <!-- 多表关联映射 -->
+        <collection property="questionClassify" ofType="QuestionClassify">
+            <id property="id" column="qcid"/>
+            <result property="name" column="qcname"/>
+        </collection>
+    </resultMap>
+
+    <select id="qryGradeAndClassify" resultMap="GradeWithClassifyResult">
+      select g.id gid,g.`name` gname, qc.id qcid,qc.`name` qcname
+from question q,grade g,question_classify qc
+where g.id=q.grade_id  and qc.id = q.classify_id
+    </select>
+
+    <select id="qryByclassifyIdAndGradeId" parameterType="Map" resultType="Question">
+      select * from question
+      where classify_id=#{classify_id} and grade_id=#{grade_id}
+    </select>
+
+    <insert id="insertQGroup" parameterType="QuestionAnswerGroup"
+            useGeneratedKeys="true" keyProperty="id">
+
+        insert into question_answer_group (p_id,create_date)
+        values(#{p_id},#{create_date});
+    </insert>
+    <insert id="insertQuestions" parameterType="QuestionAnswer">
+        insert into question_answer (q_id,answer,success,g_id)
+        values(#{q_id},#{answer},#{success},#{g_id});
+    </insert>
+
+    <select id="qryById" parameterType="int" resultType="question">
+    select * from question where id=#{id}
+    </select>
+</mapper>

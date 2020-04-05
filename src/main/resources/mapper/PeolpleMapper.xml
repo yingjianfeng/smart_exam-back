@@ -49,4 +49,7 @@ from (resource left join role_resource on resource.id=role_resource.resource_id)
 where resource.id=#{resourceId}
     </select>
 
+    <select id="qryById" parameterType="int" resultType="People">
+      select * from people where id=#{id}
+    </select>
 </mapper>

@@ -34,7 +34,7 @@ spring:
 jwt:
   config:
     key: yjfyjf
-    ttl: 3600000
+    ttl: 36000000
 
 #七牛云配置
 qiniuyun:
@@ -42,5 +42,5 @@ qiniuyun:
     accessKey: gyv_jtbDRW3o0nMAYmbu1acgAnPxfDM2JEvx4Qq4
     secretKey: 3M51U7lThWPzYEf9ZW0feITgwcRp7kxthOKL8qKz
     bucket: ecjtu-bishe
-    baseUrl: http://q6r3ukk9c.bkt.clouddn.com/
+    baseUrl: http://qn.0612yjf.cn/
 

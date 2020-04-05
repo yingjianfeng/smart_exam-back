@@ -10,8 +10,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Grade implements Serializable {
+public class QuestionClassify implements Serializable {
     int id;
     String name;
-    List<QuestionClassify> questionClassify;
+    List<Grade> grade;
 }

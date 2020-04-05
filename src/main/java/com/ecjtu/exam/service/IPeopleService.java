@@ -10,4 +10,6 @@ public interface IPeopleService {
     public People login(People people) throws Exception;
 
     public void register(People people) throws Exception;
+
+    public People qryById(int id) throws Exception;
 }
