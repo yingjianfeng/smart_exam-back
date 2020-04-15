@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface IGradeDao {
     List<Grade> qryAll();
+
+    Grade qryById(int id);
+
+    List<Grade> qryAllGrade();
 }

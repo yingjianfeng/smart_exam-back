@@ -3,6 +3,7 @@ package com.ecjtu.exam.dao;
 import com.ecjtu.exam.pojo.People;
 import com.ecjtu.exam.pojo.Resource;
 import com.ecjtu.exam.pojo.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,9 @@ public interface IPeopleDao {
     public List<Role> getRolesByResourceId(int resourceId);
 
     public People qryById(int id) ;
+
+    public void UpdatePwdById(@Param("password") String password,@Param("id")  int id);
+
+    public void UpdateImgById(@Param("img") String img,@Param("id")  int id);
+
 }

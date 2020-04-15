@@ -2,6 +2,7 @@ package com.ecjtu.exam.service;
 
 import com.ecjtu.exam.pojo.Discussion;
 import com.ecjtu.exam.pojo.PeopleLike;
+import com.ecjtu.exam.pojo.QuestionAnswerGroup;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface IDiscussionService {
     void addByPeopleIdAndDiscussionId(int peopleId, int discussionId) throws Exception;
 
     List<Discussion> qryByParentId(int parent_id,int id)throws Exception;
+
+    List<QuestionAnswerGroup> groupByPIdQry()throws Exception;
 }

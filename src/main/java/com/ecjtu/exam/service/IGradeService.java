@@ -5,5 +5,5 @@ import com.ecjtu.exam.pojo.Grade;
 import java.util.List;
 
 public interface IGradeService {
-    List<Grade> qryAll();
+    List<Grade> qryAll() throws Exception;
 }

@@ -30,7 +30,7 @@ public class PeopleController {
         return iStudnetService.qryAll();
     }
 
-//    @PostMapping(value = "/login")
+    //    @PostMapping(value = "/login")
     @PostMapping("/login")
     public ResultUtil login(@RequestBody People people) {
         System.out.println(people);
@@ -42,28 +42,38 @@ public class PeopleController {
             map.put("account", res.getAccount());
             map.put("password", res.getPassword());
             map.put("role_id", res.getRole_id());
+            map.put("img", res.getImg());
             String token = jwtUtils.createJwt(map);
-            return new ResultUtil(ResultCodeUtil.SUCCESS,token);
+            return new ResultUtil(ResultCodeUtil.SUCCESS, token);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResultUtil(ResultCodeUtil.USENAMEORPASSWORDERROR,e.getMessage());
+            return new ResultUtil(ResultCodeUtil.USENAMEORPASSWORDERROR, e.getMessage());
         }
     }
 
-    @GetMapping("qryAllGrade")
-    public Map qryAllGrade() {
-        List<Grade> res = iGradeService.qryAll();
+    @GetMapping("/qryAllGrade")
+    public ResultUtil qryAllGrade() {
+        List<Grade> res = null;
+        try {
+            res = iGradeService.qryAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultUtil(ResultCodeUtil.FAIL, null);
+        }
         Map<String, Object> map = new HashMap();
-        map.put("grade", res);
-        return map;
+        return new ResultUtil(ResultCodeUtil.SUCCESS, res);
     }
 
-    @GetMapping("qryAllSchool")
-    public Map qryAllSchool() {
-        List<School> res = iSchoolService.qryAll();
-        Map<String, Object> map = new HashMap();
-        map.put("school", res);
-        return map;
+    @GetMapping("/qryAllSchool")
+    public ResultUtil qryAllSchool() {
+        List<School> res = null;
+        try {
+            res = iSchoolService.qryAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultUtil(ResultCodeUtil.FAIL);
+        }
+        return new ResultUtil(ResultCodeUtil.SUCCESS, res);
     }
 
     @PostMapping("/register")
@@ -81,5 +91,4 @@ public class PeopleController {
         }
         return map;
     }
-
 }

@@ -21,6 +21,7 @@ public class BaseController {
     protected String name;
     protected String account;
     protected String password;
+    protected String img;
 
     @ModelAttribute
     public void setResAnReq(HttpServletRequest request,HttpServletResponse response) throws CommonException {
@@ -34,6 +35,7 @@ public class BaseController {
         this.name = (String)claims.get("name");
         this.account = (String)claims.get("account");
         this.password = (String)claims.get("password");
+        this.img = (String)claims.get("img");
         System.out.println("解析token结束");
     }
 

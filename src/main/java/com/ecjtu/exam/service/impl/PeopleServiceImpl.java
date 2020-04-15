@@ -110,6 +110,9 @@ public class PeopleServiceImpl implements IPeopleService {
 
         for (QuestionAnswerGroup item : questionAnswerGroups) {
             String spentTime = item.getSpentTime();
+            if (spentTime.equals("不计时")) {
+                continue;
+            }
             int a = spentTime.indexOf('分');
             int b = spentTime.indexOf('秒');
             int c = Integer.parseInt(spentTime.substring(0, a));

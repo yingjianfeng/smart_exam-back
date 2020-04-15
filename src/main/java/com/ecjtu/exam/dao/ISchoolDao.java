@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface ISchoolDao {
     List<School> qryAll();
+
+    School qryById(int id);
+
 }

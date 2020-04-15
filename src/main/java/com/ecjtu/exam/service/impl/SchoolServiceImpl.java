@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class SchoolServiceImpl  implements ISchoolService {
+public class SchoolServiceImpl implements ISchoolService {
     @Autowired
     ISchoolDao iSchoolDao;
+
     @Override
-    public List<School> qryAll() {
+    public List<School> qryAll() throws Exception {
         return iSchoolDao.qryAll();
     }
 }

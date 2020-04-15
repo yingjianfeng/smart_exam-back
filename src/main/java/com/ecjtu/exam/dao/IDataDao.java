@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface IDataDao {
     List<Data> qryAll();
+
+    void deleteById(int id);
+
+    void insert(Data data);
+
+    void updateDesById(Data data);
 }

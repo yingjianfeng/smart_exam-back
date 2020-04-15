@@ -8,6 +8,8 @@
 		select *
 		from school
 	</select>
-
+	<select id="qryById" parameterType="int" resultType="School">
+		select * from school where id=#{id}
+	</select>
 
 </mapper>

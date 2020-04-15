@@ -7,4 +7,18 @@
     <select id="qryAll" resultType="Data">
         select * from data
     </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from data where id=#{id}
+    </delete>
+
+    <insert id="insert" parameterType="data">
+      insert into data
+      (name,date,description,p_id,type)values
+      (#{name},#{date},#{description},#{p_id},#{type})
+    </insert>
+
+    <update id="updateDesById" parameterType="data" >
+        update data set description=#{description} where id=#{id}
+    </update>
 </mapper>

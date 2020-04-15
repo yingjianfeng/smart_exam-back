@@ -44,4 +44,6 @@ public interface IDiscussionDao {
      */
     List<Discussion> qryByParentId(int id);
 
+
+
 }

@@ -5,9 +5,12 @@
 <mapper namespace="com.ecjtu.exam.dao.IGradeDao">
 
     <select id="qryAll" resultType="Grade">
-		select *
-		from grade
+		 select DISTINCT  id, name
+      from grade
 	</select>
 
+	<select id="qryById" parameterType="int" resultType="grade">
+		select * from grade where id=#{id}
+	</select>
 
 </mapper>

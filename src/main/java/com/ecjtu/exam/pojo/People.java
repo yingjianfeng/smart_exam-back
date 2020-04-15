@@ -15,6 +15,7 @@ public class People implements Serializable {
     String account;
     String password;
     String phone;
+    String img;
     int grade_id;
     int school_id;
     int status;

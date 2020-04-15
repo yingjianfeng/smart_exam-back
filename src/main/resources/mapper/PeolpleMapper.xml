@@ -52,4 +52,12 @@ where resource.id=#{resourceId}
     <select id="qryById" parameterType="int" resultType="People">
       select * from people where id=#{id}
     </select>
+
+    <select id="UpdatePwdById" parameterType="map" >
+        update people set password=#{password} where id=#{id}
+    </select>
+
+    <select id="UpdateImgById" parameterType="map" >
+        update people set img=#{img} where id=#{id}
+    </select>
 </mapper>

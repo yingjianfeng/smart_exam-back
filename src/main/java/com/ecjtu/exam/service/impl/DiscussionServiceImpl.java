@@ -1,9 +1,12 @@
 package com.ecjtu.exam.service.impl;
 
 import com.ecjtu.exam.dao.IDiscussionDao;
+import com.ecjtu.exam.dao.IQuestionDao;
 import com.ecjtu.exam.pojo.Discussion;
 import com.ecjtu.exam.pojo.PeopleLike;
+import com.ecjtu.exam.pojo.QuestionAnswerGroup;
 import com.ecjtu.exam.service.IDiscussionService;
+import com.ecjtu.exam.service.IPeopleService;
 import com.ecjtu.exam.util.QiniuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,11 @@ public class DiscussionServiceImpl implements IDiscussionService {
     IDiscussionDao iDiscussionDao;
     @Autowired
     QiniuUtil qiniuUtil;
+    @Autowired
+    IQuestionDao iQuestionDao;
+
+    @Autowired
+    IPeopleService iPeopleService;
 
     @Override
     public void insert(Discussion discussion) throws Exception {
@@ -87,5 +95,10 @@ public class DiscussionServiceImpl implements IDiscussionService {
             discussion.setLike(peopleLikes.size());
         }
         return discussions;
+    }
+
+    @Override
+    public List<QuestionAnswerGroup> groupByPIdQry() throws Exception {
+        return iQuestionDao.groupByPIdQry();
     }
 }

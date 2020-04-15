@@ -1,8 +1,10 @@
 package com.ecjtu.exam.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ecjtu.exam.dao.IQuestionDao;
 import com.ecjtu.exam.pojo.Discussion;
 import com.ecjtu.exam.pojo.PeopleLike;
+import com.ecjtu.exam.pojo.QuestionAnswerGroup;
 import com.ecjtu.exam.service.IDiscussionService;
 import com.ecjtu.exam.util.QiniuUtil;
 import com.ecjtu.exam.util.ResultCodeUtil;
@@ -23,6 +25,7 @@ public class DiscussionController extends BaseController {
 
     @Autowired
     QiniuUtil qiniuUtil;
+
     @Autowired
     IDiscussionService iDiscussionService;
 
@@ -105,6 +108,17 @@ public class DiscussionController extends BaseController {
             return new ResultUtil(ResultCodeUtil.FAIL);
         }
         return new ResultUtil(ResultCodeUtil.SUCCESS, comment);
+    }
+
+    @GetMapping("/groupByPIdQry")
+    public ResultUtil groupByPIdQry() {
+        List<QuestionAnswerGroup> questionAnswerGroups = null;
+        try {
+           questionAnswerGroups = iDiscussionService.groupByPIdQry();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResultUtil(ResultCodeUtil.SUCCESS, questionAnswerGroups);
     }
 
 }

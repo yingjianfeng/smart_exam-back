@@ -64,7 +64,6 @@ public class QiniuUtil {
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
         //默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = System.currentTimeMillis() + "";
-        ;
         Auth auth = Auth.create(this.accessKey, this.secretKey);
         String upToken = auth.uploadToken(this.bucket);
         try {
@@ -119,5 +118,7 @@ public class QiniuUtil {
             System.err.println(ex.response.toString());
         }
     }
+
+
 
 }

@@ -19,15 +19,33 @@ public class DataServiceImpl implements IDataService {
     IPeopleDao iPeopleDao;
     @Autowired
     QiniuUtil qiniuUtil;
+
     @Override
     public List<Data> qryAll() throws Exception {
         List<Data> data = iDataDao.qryAll();
-        for(Data d:data){
+        for (Data d : data) {
             People people = iPeopleDao.qryById(d.getP_id());
             d.setPname(people.getName());
-            String url = qiniuUtil.getUrl(d.getName())+"?attname="+d.getName()+d.getType();
+            String url = qiniuUtil.getUrl(d.getName()) + "?attname=" + d.getName() + d.getType();
             d.setUrl(url);
         }
         return data;
     }
+
+    @Override
+    public void deleteById(Data data) throws Exception {
+        iDataDao.deleteById(data.getId());
+        qiniuUtil.delete(data.getName());
+    }
+
+    @Override
+    public void insert(Data data) throws Exception {
+        iDataDao.insert(data);
+    }
+
+    @Override
+    public void updateDesById(Data data) throws Exception {
+        iDataDao.updateDesById(data);
+    }
+
 }

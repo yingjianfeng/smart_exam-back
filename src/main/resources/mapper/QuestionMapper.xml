@@ -20,16 +20,25 @@ where g.id=q.grade_id  and qc.id = q.classify_id
     </select>
 
     <select id="qryByclassifyIdAndGradeId" parameterType="Map" resultType="Question">
-      select * from question
+      select question.id,question.classify_id,question.type,question.grade_id,question.school_id,question.content,option1,question.option2,question.option3,question.option4,question.answer,
+      IFNULL(collect.id,0) collect
+      from question left join collect on question.id=collect.q_id
       where classify_id=#{classify_id} and grade_id=#{grade_id}
     </select>
 
     <insert id="insertQGroup" parameterType="QuestionAnswerGroup"
             useGeneratedKeys="true" keyProperty="id">
-
-        insert into question_answer_group (p_id,create_date)
-        values(#{p_id},#{create_date});
+        insert into question_answer_group (p_id,create_date,spentTime,accuracy)
+        values(#{p_id},#{create_date},#{spentTime},#{accuracy});
     </insert>
+    <update id="updateQGroupAccuracyById" parameterType="QuestionAnswerGroup">
+        update question_answer_group set accuracy = #{accuracy} where id = #{id}
+    </update>
+
+    <select id="qryQGroupByPid" parameterType="QuestionAnswerGroup" resultType="QuestionAnswerGroup">
+        select * from question_answer_group where p_id=#{id}
+    </select>
+
     <insert id="insertQuestions" parameterType="QuestionAnswer">
         insert into question_answer (q_id,answer,success,g_id)
         values(#{q_id},#{answer},#{success},#{g_id});
@@ -37,5 +46,79 @@ where g.id=q.grade_id  and qc.id = q.classify_id
 
     <select id="qryById" parameterType="int" resultType="question">
     select * from question where id=#{id}
+    </select>
+
+    <select id="groupByPIdQry" resultType="QuestionAnswerGroup">
+select any_value(question_answer_group.id) id,any_value(p_id) p_id,any_value(create_date) create_date,count( p_id) times,people.`name` `p_name`  from question_answer_group left join people on question_answer_group.p_id=people.id
+	where TO_DAYS(now())-TO_DAYS(create_date)=1
+	group by p_id order by times desc limit 0,6
+    </select>
+
+    <insert id="insertByQidAndPid" parameterType="map">
+        insert into collect (p_id,q_id) values (#{pid},#{qid})
+    </insert>
+
+    <delete id="deleteByQidAndPid">
+        delete  from collect where p_id=#{pid} and q_id=#{qid}
+    </delete>
+
+    <select id="qryByGradeId" parameterType="Map" resultType="Question">
+      select question.id,question.classify_id,question.type,question.grade_id,question.school_id,question.content,option1,question.option2,question.option3,question.option4,question.answer,
+      IFNULL(collect.id,0) collect
+      from question left join collect on question.id=collect.q_id
+      where  grade_id=6
+		order by type desc
+    </select>
+
+
+    <select id="qryByGid" parameterType="int" resultType="GroupAndAnswer">
+        select q.content content,q.type,q.option1,q.option2,q.option3,q.option4,qa.answer answer ,q.answer result, qa.success success from
+
+question_answer qa left join question q on qa.q_id = q.id
+where g_id=#{id}
+    </select>
+
+    <update id="updateQGroupRemarkById" parameterType="map">
+        update question_answer_group set remark=#{remark}
+        where id=#{id}
+    </update>
+
+    <select id="qryAllQuestionInfo" resultType="QuestionInfo">
+select q.id,q.type,q.content,q.option1,q.option2,q.option3,q.option4,q.answer ,g.name grade,qc.name classify
+from (question q left join grade g on q.grade_id=g.id)  left join question_classify qc  on q.classify_id= qc.id
+    </select>
+
+    <select id="qryQuestionInfoById" parameterType="int" resultType="QuestionInfo">
+        select q.id,q.type,q.content,q.option1,q.option2,q.option3,q.option4,q.answer ,g.name grade,qc.name classify
+from (question q left join grade g on q.grade_id=g.id)  left join question_classify qc  on q.classify_id= qc.id
+where q.id=#{id}
+    </select>
+
+    <update id="updateQuestionInfoById" parameterType="QuestionInfo">
+      update question
+      set content=#{content},option1=#{option1},option2=#{option2}
+      ,option3=#{option3},option4=#{option4},answer=#{answer}
+      where id=#{id}
+    </update>
+
+    <delete id="deleteQuestionInfoById" parameterType="int">
+        delete from question where id=#{id}
+    </delete>
+
+    <select id="qryQClassify" resultType="QuestionClassify">
+        select * from question_classify
+    </select>
+
+    <insert id="addQuestion" parameterType="question">
+        insert into question
+        (classify_id,type,grade_id,school_id,content,option1,option2,option3,option4,answer)
+        values(#{classify_id},#{type},#{grader_id},#{school_id},
+        #{content},#{option1},#{option2},#{option3},#{option4},#{answer})
+    </insert>
+
+    <select id="qryPeopleQuestionDetail" resultType="PeopleQuestionDetail">
+      select p.id,p.name,qag.id qid,qag.create_date,qag.spentTime,qag.accuracy,qag.remark,s.name sname,g.name gname
+from ( (question_answer_group qag left join people p on qag.p_id=p.id) left join grade g on p.grade_id=g.id) left join school  s
+on p.school_id = s.id
     </select>
 </mapper>

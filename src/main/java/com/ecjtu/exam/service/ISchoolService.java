@@ -5,5 +5,5 @@ import com.ecjtu.exam.pojo.School;
 import java.util.List;
 
 public interface ISchoolService {
-    List<School> qryAll();
+    List<School> qryAll() throws Exception;
 }
