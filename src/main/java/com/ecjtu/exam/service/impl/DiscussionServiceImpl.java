@@ -35,6 +35,11 @@ public class DiscussionServiceImpl implements IDiscussionService {
     }
 
     @Override
+    public void insertReply(Discussion discussion) throws Exception {
+        iDiscussionDao.insertReply(discussion);
+    }
+
+    @Override
     public List<Discussion> qryNotParentId(int id) throws Exception {
         PeopleLike peopleLike = null;
         List<Discussion> discussions = iDiscussionDao.qryNotParentId();

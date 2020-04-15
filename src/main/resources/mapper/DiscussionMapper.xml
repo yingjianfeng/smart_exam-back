@@ -9,6 +9,11 @@
 		values(#{people_id},#{content},#{imgs},#{create_time},#{state})
 	</select>
 
+    <select id="insertReply" parameterType="discussion">
+		insert into discussion (people_id,content,create_time,state,parent_id)
+		values(#{people_id},#{content},#{create_time},#{state},#{parent_id})
+	</select>
+
     <select id="qryNotParentId" resultType="discussion">
 SELECT
 	discussion.id id,
@@ -18,13 +23,15 @@ SELECT
 	discussion.create_time create_time,
 	discussion.state state,
 	discussion.parent_id parent_id,
-	people.`name` people_name
+	people.`name` people_name,
+	people.img people_img
 FROM
 	discussion
 	LEFT JOIN people ON discussion.people_id= people.id
 WHERE
 	discussion.parent_id IS NULL
 	OR discussion.parent_id =0
+order by create_time desc
 	</select>
 
     <select id="qryByPeopleIdAndDiscussionId" parameterType="map" resultType="PeopleLike">
@@ -53,7 +60,8 @@ SELECT
 	discussion.create_time create_time,
 	discussion.state state,
 	discussion.parent_id parent_id,
-	people.`name` people_name
+	people.`name` people_name,
+	people.img people_img
 FROM
 	discussion
 	LEFT JOIN people ON discussion.people_id= people.id

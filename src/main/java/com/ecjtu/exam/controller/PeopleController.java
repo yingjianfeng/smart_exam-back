@@ -77,18 +77,17 @@ public class PeopleController {
     }
 
     @PostMapping("/register")
-    public Map register(@RequestBody People people) {
+    public ResultUtil register(@RequestBody People people) {
 //        System.out.println(people);
-        people.setName(CommonUtil.getRandomStr());  //赋予一个随机名称
+//        people.setName(CommonUtil.getRandomStr());  //赋予一个随机名称
         System.out.println(people);
-        Map<String, Object> map = new HashMap();
+        people.setImg("https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3386247472,87720242&fm=26&gp=0.jpg");
         try {
             iStudnetService.register(people);
-            map.put("status", ConstUtil.STATE_RETURN_SUCCESS);
         } catch (Exception e) {
-            map.put("status", ConstUtil.STATE_RETURN_FAIL);
-            map.put("message", e.getMessage());
+            e.printStackTrace();
+            return new ResultUtil(ResultCodeUtil.FAIL, e.getMessage());
         }
-        return map;
+        return new ResultUtil(ResultCodeUtil.SUCCESS);
     }
 }

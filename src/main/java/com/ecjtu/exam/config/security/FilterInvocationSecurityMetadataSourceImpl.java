@@ -31,7 +31,9 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 //        System.out.println("FilterInvocationSecurityMetadataSourceImpl");
 
         //如果登录页面就不需要权限
-        if ("/login".equals(requestUrl)) {
+        if ("/login".equals(requestUrl)||"/qryAllGrade".equals(requestUrl)
+                ||"/qryAllSchool".equals(requestUrl)
+                ||"/register".equals(requestUrl)) {
             return null;
         }
         Resource resource = iPeopleDao.getResourceByUrl(requestUrl);

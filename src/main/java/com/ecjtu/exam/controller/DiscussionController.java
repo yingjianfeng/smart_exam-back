@@ -3,6 +3,7 @@ package com.ecjtu.exam.controller;
 import com.alibaba.fastjson.JSON;
 import com.ecjtu.exam.dao.IQuestionDao;
 import com.ecjtu.exam.pojo.Discussion;
+import com.ecjtu.exam.pojo.People;
 import com.ecjtu.exam.pojo.PeopleLike;
 import com.ecjtu.exam.pojo.QuestionAnswerGroup;
 import com.ecjtu.exam.service.IDiscussionService;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +69,19 @@ public class DiscussionController extends BaseController {
         }
     }
 
+    @PostMapping("/reply")
+    public void reply(@RequestBody Discussion discussion) {
+        System.out.println(discussion);
+        discussion.setPeople_id(this.id);
+        discussion.setState(1);
+        discussion.setCreate_time(new Date());
+        try {
+            iDiscussionService.insertReply(discussion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @PostMapping("/qryNotParentId")
     public ResultUtil qryNotParentId() {
         List<Discussion> discussions = null;
@@ -76,7 +91,14 @@ public class DiscussionController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResultUtil(ResultCodeUtil.SUCCESS, discussions);
+        People people = new People();
+        people.setId(super.id);
+        people.setImg(super.img);
+
+        Map<String, Object> map = new HashMap();
+        map.put("people", people);
+        map.put("discussions", discussions);
+        return new ResultUtil(ResultCodeUtil.SUCCESS, map);
     }
 
     @GetMapping("/deleteLikeByDiscussion")
@@ -103,7 +125,7 @@ public class DiscussionController extends BaseController {
     public ResultUtil qryByParentId(int parent_id) {
         List<Discussion> comment = null;
         try {
-            comment = iDiscussionService.qryByParentId(parent_id,id);
+            comment = iDiscussionService.qryByParentId(parent_id, id);
         } catch (Exception e) {
             return new ResultUtil(ResultCodeUtil.FAIL);
         }
@@ -114,7 +136,7 @@ public class DiscussionController extends BaseController {
     public ResultUtil groupByPIdQry() {
         List<QuestionAnswerGroup> questionAnswerGroups = null;
         try {
-           questionAnswerGroups = iDiscussionService.groupByPIdQry();
+            questionAnswerGroups = iDiscussionService.groupByPIdQry();
         } catch (Exception e) {
             e.printStackTrace();
         }

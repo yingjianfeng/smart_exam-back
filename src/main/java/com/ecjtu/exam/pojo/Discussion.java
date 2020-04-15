@@ -14,6 +14,7 @@ import java.util.Date;
 public class Discussion implements Serializable {
     int id;
     int people_id;
+    String people_img;
     String people_name;
     String content;
     String imgs;

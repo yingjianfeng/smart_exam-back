@@ -14,6 +14,11 @@ public interface IDiscussionDao {
     void insert(Discussion discussion);
 
     /**
+     * 插入一条回复
+     * @param discussion
+     */
+    void insertReply(Discussion discussion);
+    /**
      * 查询所有的一级动态
      */
     List<Discussion> qryNotParentId();

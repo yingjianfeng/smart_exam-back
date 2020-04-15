@@ -41,7 +41,7 @@ public class PeopleServiceImpl implements IPeopleService {
 
     @Override
     public People login(People people) throws Exception {
-        People res = ipeopleDao.qryByAccount(people.getAccount());
+        People res = ipeopleDao.qryByAccountAndType(people);
         if (res == null) {
             throw new Exception("用户不存在");
         }

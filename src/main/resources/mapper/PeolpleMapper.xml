@@ -11,7 +11,7 @@
     <select id="qryByAccountAndType" resultType="People" parameterType="People">
 		select *
 		from people
-		where account =#{account} and type=#{type}
+		where account =#{account} and role_id=#{role_id}
 	</select>
     <select id="qryByAccount" resultType="People" parameterType="String">
 		select *
@@ -20,8 +20,8 @@
 	</select>
     <insert id="insert" parameterType="People">
 		insert into people
-		(name,account,password,type,grade_id,school_id)
-		values(#{name},#{account},#{password},#{type},#{grade_id},#{school_id});
+		(name,account,password,img,role_id,grade_id,school_id)
+		values(#{name},#{account},#{password},#{img},#{role_id},#{grade_id},#{school_id});
 	</insert>
     <resultMap id="role_map" type="Role">
         <id property="id" column="r_id"/>

@@ -9,6 +9,8 @@ import java.util.List;
 public interface IDiscussionService {
     void insert(Discussion discussion) throws Exception;
 
+    void insertReply(Discussion discussion)throws Exception;
+
     List<Discussion> qryNotParentId(int id) throws Exception;
 
     PeopleLike qryByPeopleIdAndDiscussionId(int peopleId, int discussionId) throws Exception;
