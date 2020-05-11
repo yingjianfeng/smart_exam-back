@@ -1,12 +1,11 @@
 package com.ecjtu.exam.service;
 
 import com.ecjtu.exam.pojo.*;
-import com.ecjtu.exam.pojo.vo.GroupAndAnswer;
-import com.ecjtu.exam.pojo.vo.PeopleQuestionDetail;
-import com.ecjtu.exam.pojo.vo.QuestionInfo;
+import com.ecjtu.exam.pojo.vo.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IQuestionService {
@@ -34,7 +33,7 @@ public interface IQuestionService {
     /**
      * 记录答题卡
      */
-    void insertQuestions(QuestionAnswer questionAnswer) throws Exception;
+    void insertQuestions(QuestionAnswer questionAnswer, int id) throws Exception;
 
     Question qryById(int id) throws Exception;
 
@@ -56,7 +55,19 @@ public interface IQuestionService {
 
     List<QuestionClassify> qryQClassify() throws Exception;
 
-    void addQuestion(Question question)throws Exception;
+    void addQuestion(Question question) throws Exception;
 
-    List<PeopleQuestionDetail> qryPeopleQuestionDetail()throws Exception;
+    List<PeopleQuestionDetail> qryPeopleQuestionDetail() throws Exception;
+
+    Set<QuestionInfo> qryQuestionFailByPId(int id) throws Exception;
+
+    void deleteQuestionFailById(int id) throws Exception;
+
+    List<QuestionGroup> qryQuestionInfoByGroup(int id) throws Exception;
+
+    List<Echarts1> qryEcharts1() throws Exception;
+
+    List<Echarts2> qryEcharts2() throws Exception;
+
+    List<Echarts3> qryEcharts3(Date date,String name) throws Exception;
 }

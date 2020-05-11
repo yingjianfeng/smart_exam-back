@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ecjtu.exam.dao.IArticleDao">
+
+    <insert id="add" parameterType="Article">
+		insert into article
+		(id,name,content,p_id,create_date,visits,introduce)
+		values
+		(#{id},#{name},#{content},#{p_id},#{create_date},#{visits},#{introduce})
+	</insert>
+
+    <resultMap type="com.ecjtu.exam.pojo.vo.ArticleInfo" id="articleInfoMap">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="create_date" column="create_date"/>
+        <result property="p_id" column="p_id"/>
+        <result property="visits" column="visits"/>
+        <result property="introduce" column="introduce"/>
+        <!-- 这是映射 -->
+        <association property="people" javaType="com.ecjtu.exam.pojo.People">
+            <id property="id" column="pid"/>
+            <result property="name" column="pname"/>
+            <result property="img" column="pimg"/>
+        </association>
+    </resultMap>
+    <select id="qryById" resultMap="articleInfoMap">
+		select a.id id,a.name name,a.content content,a.create_date,a.p_id p_id ,
+		a.visits visits,a.introduce introduce,
+			p.id pid, p.name pname,p.img pimg
+		from article a left join people p on a.p_id=p.id
+	  	where a.id=#{id}
+	</select>
+
+    <select id="qryAll" resultMap="articleInfoMap">
+        select a.id id,a.name name,a.content content,a.create_date,a.p_id p_id ,
+		a.visits visits,a.introduce introduce,
+			p.id pid, p.name pname,p.img pimg
+		from article a left join people p on a.p_id=p.id
+    </select>
+
+    <update id="updateVisitsById" parameterType="map">
+        update article set visits=#{visits}
+        where id=#{id}
+    </update>
+
+</mapper>

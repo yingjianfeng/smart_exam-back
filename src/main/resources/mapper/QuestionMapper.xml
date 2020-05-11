@@ -10,11 +10,12 @@
         <collection property="questionClassify" ofType="QuestionClassify">
             <id property="id" column="qcid"/>
             <result property="name" column="qcname"/>
+            <result property="img" column="qcimg"/>
         </collection>
     </resultMap>
 
     <select id="qryGradeAndClassify" resultMap="GradeWithClassifyResult">
-      select g.id gid,g.`name` gname, qc.id qcid,qc.`name` qcname
+      select g.id gid,g.`name` gname, qc.id qcid,qc.`name` qcname,qc.img qcimg
 from question q,grade g,question_classify qc
 where g.id=q.grade_id  and qc.id = q.classify_id
     </select>
@@ -121,4 +122,44 @@ where q.id=#{id}
 from ( (question_answer_group qag left join people p on qag.p_id=p.id) left join grade g on p.grade_id=g.id) left join school  s
 on p.school_id = s.id
     </select>
+
+    <!--题目错误表操作-->
+    <insert id="insertQuestionFail" parameterType="map">
+        insert into question_answer_fail (q_id,p_id) values(#{q_id},#{p_id})
+    </insert>
+    <select id="qryQuestionFailByPId" parameterType="int" resultType="QuestionInfo">
+select q.id id,type,content,option1,option2,option3,option4,answer,f.id f_id
+from question_answer_fail f left join question  q on f.q_id = q.id
+where f.p_id=#{id}
+    </select>
+    <delete id="deleteQuestionFailById" parameterType="int">
+        delete from question_answer_fail where id=#{id}
+    </delete>
+
+    <select id="qryQuestionInfoByGroup" parameterType="int" resultType="QuestionGroup">
+        select any_value(q.classify_id) classify,count(1) count,count(qa.success=1 OR NULL) success,count(qa.success=2 OR NULL) fail
+from
+( question q left join question_answer qa on q.id = qa.q_id) left join question_answer_group qag on qa.g_id=qag.id
+where qag.p_id=#{id}
+group by q.classify_id
+    </select>
+
+    <select id="qryEcharts1" resultType="Echarts1">
+select success,count(1) count
+from question_answer
+group by success
+    </select>
+    <select id="qryEcharts2" resultType="Echarts2">
+select qc.name,count(qa.success=1 OR NULL) success,count(qa.success=2 OR NULL) fail
+from
+ (question_answer qa left join question q on qa.q_id = q.id) left join question_classify qc  on q.classify_id = qc.id
+group by q.classify_id
+    </select>
+
+    <select id="qryEcharts3" resultType="Echarts3" parameterType="map">
+select count(qa.success=1 OR NULL) success,count(qa.success=2 OR NULL) fail
+from (question_answer qa left join question_answer_group qag on qa.g_id = qag.id) left join people p on  qag.p_id = p.id
+where  TO_DAYS(date_format(create_date,'%Y-%m-%d'))=TO_DAYS(#{date}) and p.name = #{name}
+    </select>
+
 </mapper>

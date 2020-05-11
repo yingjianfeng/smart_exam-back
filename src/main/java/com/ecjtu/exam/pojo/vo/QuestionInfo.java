@@ -10,6 +10,7 @@ import lombok.ToString;
 public class QuestionInfo {
     int id;
     int type;
+    int f_id;
     String content;
     String option1;
     String option2;

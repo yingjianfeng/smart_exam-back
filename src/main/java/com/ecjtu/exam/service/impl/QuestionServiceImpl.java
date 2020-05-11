@@ -2,17 +2,13 @@ package com.ecjtu.exam.service.impl;
 
 import com.ecjtu.exam.dao.IQuestionDao;
 import com.ecjtu.exam.pojo.*;
-import com.ecjtu.exam.pojo.vo.GroupAndAnswer;
-import com.ecjtu.exam.pojo.vo.PeopleQuestionDetail;
-import com.ecjtu.exam.pojo.vo.QuestionInfo;
+import com.ecjtu.exam.pojo.vo.*;
 import com.ecjtu.exam.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class QuestionServiceImpl implements IQuestionService {
@@ -50,8 +46,11 @@ public class QuestionServiceImpl implements IQuestionService {
     }
 
     @Override
-    public void insertQuestions(QuestionAnswer questionAnswer) throws Exception {
+    public void insertQuestions(QuestionAnswer questionAnswer, int id) throws Exception {
         iQuestionDao.insertQuestions(questionAnswer);
+        if (questionAnswer.getSuccess() == 2) { //本题回答错误  加入错误表
+            iQuestionDao.insertQuestionFail(questionAnswer.getQ_id(), id);
+        }
     }
 
     @Override
@@ -112,6 +111,46 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public List<PeopleQuestionDetail> qryPeopleQuestionDetail() throws Exception {
         return iQuestionDao.qryPeopleQuestionDetail();
+    }
+
+    @Override
+    public Set<QuestionInfo> qryQuestionFailByPId(int id) throws Exception {
+        return iQuestionDao.qryQuestionFailByPId(id);
+    }
+
+    @Override
+    public void deleteQuestionFailById(int id) throws Exception {
+        iQuestionDao.deleteQuestionFailById(id);
+    }
+
+    @Override
+    public List<QuestionGroup> qryQuestionInfoByGroup(int id) throws Exception {
+        return iQuestionDao.qryQuestionInfoByGroup(id);
+    }
+
+    @Override
+    public List<Echarts1> qryEcharts1() throws Exception {
+        return iQuestionDao.qryEcharts1();
+    }
+    @Override
+    public List<Echarts2> qryEcharts2() throws Exception {
+        return iQuestionDao.qryEcharts2();
+    }
+
+    @Override
+    public List<Echarts3> qryEcharts3(Date date,String name) throws Exception {
+        Calendar c = Calendar.getInstance();
+        List<Echarts3> list = new ArrayList<>();
+        for(int i=1;i>-6;i--){
+            c.setTime(date);
+            c.add(Calendar.DAY_OF_MONTH, i);
+            Date d = c.getTime();//这是明天
+            String s = new SimpleDateFormat("yyyy-MM-dd").format(d);
+            Echarts3 item = iQuestionDao.qryEcharts3(name,s);
+            item.setDate(s);
+            list.add(item);
+        }
+        return list;
     }
 
     //把question里的答案置空

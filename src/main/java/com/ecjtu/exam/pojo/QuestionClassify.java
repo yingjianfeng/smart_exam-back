@@ -13,5 +13,6 @@ import java.util.List;
 public class QuestionClassify implements Serializable {
     int id;
     String name;
+    String img;
     List<Grade> grade;
 }

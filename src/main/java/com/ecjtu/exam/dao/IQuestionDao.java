@@ -1,9 +1,7 @@
 package com.ecjtu.exam.dao;
 
 import com.ecjtu.exam.pojo.*;
-import com.ecjtu.exam.pojo.vo.GroupAndAnswer;
-import com.ecjtu.exam.pojo.vo.PeopleQuestionDetail;
-import com.ecjtu.exam.pojo.vo.QuestionInfo;
+import com.ecjtu.exam.pojo.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,6 +15,7 @@ public interface IQuestionDao {
     Set<Question> qryByGradeId(int grade_id);
 
     /**
+     * QuestionClassify
      * 记录一次答题
      */
     void insertQGroup(QuestionAnswerGroup questionAnswerGroup);
@@ -73,4 +72,17 @@ public interface IQuestionDao {
     void addQuestion(Question question);
 
     List<PeopleQuestionDetail> qryPeopleQuestionDetail();
+
+    void insertQuestionFail(@Param("q_id") int q_id, @Param("p_id") int p_id);
+
+    Set<QuestionInfo> qryQuestionFailByPId(int id);
+
+    void deleteQuestionFailById(int id);
+
+    List<QuestionGroup> qryQuestionInfoByGroup(int id);
+
+    List<Echarts1> qryEcharts1();
+
+    List<Echarts2> qryEcharts2();
+    Echarts3 qryEcharts3( @Param("name") String name, @Param("date") String date);
 }

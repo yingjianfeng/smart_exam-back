@@ -78,9 +78,6 @@ public class PeopleController {
 
     @PostMapping("/register")
     public ResultUtil register(@RequestBody People people) {
-//        System.out.println(people);
-//        people.setName(CommonUtil.getRandomStr());  //赋予一个随机名称
-        System.out.println(people);
         people.setImg("https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3386247472,87720242&fm=26&gp=0.jpg");
         try {
             iStudnetService.register(people);
